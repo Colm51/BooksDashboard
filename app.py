@@ -96,7 +96,7 @@ except (FileNotFoundError, ValueError, ImportError) as error:
 
 st.title("My Book Collection")
 st.markdown(
-    '<p class="quiet">A view of the subjects, languages, and publication history of my personal library.</p>',
+    '<p class="quiet">The subjects, languages, and publication dates of books in my personal library.</p>',
     unsafe_allow_html=True,
 )
 
@@ -187,7 +187,7 @@ st.caption(
 
 section_intro(
     "Publication Years",
-    "Only represented years are plotted, so the oldest books remain visible without turning empty years into visual noise. Missing or invalid dates are excluded.",
+    "This may not represent the initial date of release! For example for Greek texts. Missing or invalid dates are excluded.",
 )
 year_data = year_counts(filtered)
 decade_data = decade_counts(filtered)
@@ -242,7 +242,7 @@ else:
 
 section_intro(
     "Collections",
-    "Collections can overlap. Each book counts once within a collection, while the headline book total always counts each selected row once. Administrative storage labels are excluded.",
+    "Collections can overlap. Each book counts once within a collection, while the headline book total always counts each selected row once.",
 )
 collection_stats = collection_summary(filtered)
 if collection_stats.empty:
@@ -255,7 +255,7 @@ else:
         collection_chart = collection_stats.head(TOP_CATEGORIES)
     else:
         st.markdown(
-            '<p class="quiet">The universal “Your library” umbrella is retained in the table but omitted from the chart so the curated groups remain legible.</p>',
+            '<p class="quiet">I have not assigned most books to a collection.</p>',
             unsafe_allow_html=True,
         )
     collection_chart = collection_chart.sort_values("Books", ascending=True)
@@ -321,7 +321,7 @@ else:
 
 section_intro(
     "Languages",
-    "Language fields are kept compact because English accounts for most of the collection. Multi-language books count once in each listed language.",
+    "Language fields are kept compact because English accounts for most of the collection. Multi-language books count once in each listed language. Original language would be another interesting field",
 )
 language_columns = st.columns(2)
 language_specs = [
