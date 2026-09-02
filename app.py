@@ -242,7 +242,7 @@ else:
 
 section_intro(
     "Collections",
-    "Collections can overlap. Each book counts once within a collection, while the headline book total always counts each selected row once.",
+    "Collections can overlap. Each book counts once within a collection, while the headline book total always counts each selected row once. Administrative storage labels are excluded.",
 )
 collection_stats = collection_summary(filtered)
 if collection_stats.empty:

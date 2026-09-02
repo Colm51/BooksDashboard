@@ -8,6 +8,8 @@ from pathlib import Path
 import pandas as pd
 
 
+ADMIN_COLLECTIONS = frozenset({"archive", "Box1", "Box2", "Box3"})
+
 SOURCE_COLUMNS = [
     "Book ID",
     "Title",
@@ -91,6 +93,8 @@ def split_memberships(data: pd.DataFrame, source_column: str, label: str) -> pd.
         memberships[label].notna() & memberships[label].ne(""),
         ["_Book Row", label],
     ]
+    if source_column == "Collections":
+        memberships = memberships.loc[~memberships[label].isin(ADMIN_COLLECTIONS)]
     return memberships.drop_duplicates(["_Book Row", label])
 
 
