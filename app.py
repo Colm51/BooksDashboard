@@ -7,6 +7,7 @@ import plotly.express as px
 import streamlit as st
 
 from book_data import (
+    author_summary,
     collection_summary,
     decade_counts,
     dewey_summary,
@@ -279,6 +280,43 @@ else:
             "Books": st.column_config.NumberColumn(format="%,d"),
             "Authors": st.column_config.NumberColumn(format="%,d"),
             "Total Pages": st.column_config.NumberColumn(format="%,d"),
+        },
+    )
+
+section_intro(
+    "Authors",
+    "The authors with the most books in the current selection. Missing or blank author values are excluded.",
+)
+author_stats = author_summary(filtered)
+if author_stats.empty:
+    st.info("No Author values are available for the current selection.")
+else:
+    top_authors = author_stats.head(20).copy()
+    author_chart = top_authors.sort_values(
+        ["Books", "Author"], ascending=[True, False]
+    )
+    author_figure = horizontal_bar(
+        author_chart,
+        x="Books",
+        y="Author",
+        title="Top 20 authors by number of books",
+        hovertemplate="%{y}<br>%{x:,.0f} books<extra></extra>",
+        height=max(440, 31 * len(author_chart)),
+    )
+    author_figure.update_xaxes(title="Number of books")
+    st.plotly_chart(
+        author_figure,
+        width="stretch",
+        config={"displaylogo": False},
+    )
+    st.dataframe(
+        top_authors[["Author", "Books"]],
+        hide_index=True,
+        width="stretch",
+        height=300,
+        column_config={
+            "Author": st.column_config.TextColumn(width="large"),
+            "Books": st.column_config.NumberColumn(format="%,d"),
         },
     )
 

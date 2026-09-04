@@ -167,6 +167,19 @@ def collection_summary(data: pd.DataFrame) -> pd.DataFrame:
     return summary
 
 
+def author_summary(data: pd.DataFrame) -> pd.DataFrame:
+    """Count books by author, excluding missing or blank author values."""
+    authors = data[["_Book Row", "Author"]].copy()
+    authors["Author"] = authors["Author"].astype("string").str.strip()
+    authors = authors.loc[authors["Author"].notna() & authors["Author"].ne("")]
+    return (
+        authors.groupby("Author", as_index=False)
+        .agg(Books=("_Book Row", "nunique"))
+        .sort_values(["Books", "Author"], ascending=[False, True])
+        .reset_index(drop=True)
+    )
+
+
 def dewey_summary(data: pd.DataFrame) -> pd.DataFrame:
     """Summarize books by their exact Dewey Wording value."""
     known = data.loc[data["Dewey Wording"].notna()]
