@@ -76,17 +76,7 @@ st.markdown(
             }
             [data-testid="stMetricLabel"] {line-height: 1.1;}
             [data-testid="stCaptionContainer"] p {line-height: 1.2;}
-            [data-testid="stPlotlyChart"] {
-                height: clamp(220px, 58vh, 280px) !important;
-                margin-block: -0.15rem;
-            }
-
-            /* Touch gestures still work; hide the hover-oriented toolbar only in
-               this constrained viewport. Desktop and portrait controls remain. */
-            [data-testid="stPlotlyChart"] .modebar-container,
-            [data-testid="stPlotlyChart"] .modebar {
-                display: none !important;
-            }
+            [data-testid="stPlotlyChart"] {margin-block: -0.15rem;}
         }
     </style>
     """,
