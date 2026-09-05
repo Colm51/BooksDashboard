@@ -36,6 +36,58 @@ st.markdown(
         .quiet {color: color-mix(in srgb, currentColor 65%, transparent); max-width: 800px;}
         .section-rule {border-top: 1px solid rgba(128,128,128,.22); margin: 2.4rem 0 0;}
         @media (max-width: 700px) {.block-container {padding: 1.4rem 1rem 3rem;}}
+
+        /* Short landscape phones need their own treatment: their width can exceed
+           the ordinary phone breakpoint even though vertical space is scarce. */
+        @media (orientation: landscape) and (max-height: 500px) {
+            header[data-testid="stHeader"],
+            header[data-testid="stHeader"] > div[data-testid="stToolbar"] {
+                display: none !important;
+            }
+            section[data-testid="stMain"] > div[data-testid="stMainBlockContainer"] {
+                padding-top: 0 !important;
+            }
+            .block-container {
+                max-width: 100%;
+                padding-right: 1rem;
+                padding-bottom: 1.4rem;
+                padding-left: 1rem;
+            }
+            h1 {
+                font-size: 1.65rem;
+                margin: 0 0 0.15rem;
+            }
+            h2 {
+                font-size: 1.3rem;
+                margin: 0.45rem 0 0.15rem;
+            }
+            h3 {
+                font-size: 1.1rem;
+                margin-block: 0.35rem 0.1rem;
+            }
+            p {margin-block: 0.2rem;}
+            .quiet {line-height: 1.25; margin-block: 0.1rem 0.25rem;}
+            .section-rule {margin: 0.75rem 0 0;}
+            [data-testid="stVerticalBlock"] {gap: 0.45rem;}
+            [data-testid="stMetric"] {padding: 0;}
+            [data-testid="stMetricValue"] {
+                font-size: 1.45rem;
+                line-height: 1.1;
+            }
+            [data-testid="stMetricLabel"] {line-height: 1.1;}
+            [data-testid="stCaptionContainer"] p {line-height: 1.2;}
+            [data-testid="stPlotlyChart"] {
+                height: clamp(220px, 58vh, 280px) !important;
+                margin-block: -0.15rem;
+            }
+
+            /* Touch gestures still work; hide the hover-oriented toolbar only in
+               this constrained viewport. Desktop and portrait controls remain. */
+            [data-testid="stPlotlyChart"] .modebar-container,
+            [data-testid="stPlotlyChart"] .modebar {
+                display: none !important;
+            }
+        }
     </style>
     """,
     unsafe_allow_html=True,
